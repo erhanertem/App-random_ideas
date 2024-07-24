@@ -17,19 +17,26 @@ const app = express();
 // SET STATIC 'PUBLIC' FOLDER
 app.use(express.static(path.join(__dirname, 'public')));
 
-//BODY PARSER MIDDLEWARE - allow accessing req.body
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
 // CORS MIDDLEWARE - allow communication/resource sharing between these ports/services
-const corsOptions = {
-	origin: ['http://localhost:3000', 'http://localhost:5000'],
-	methods: ['GET', 'POST', 'PUT', 'DELETE'],
-	allowedHeaders: ['Content-Type', 'Authorization'],
-	credentials: true, // sets "Access-Control-Allow-Credentials", "true"
-	optionSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
+// > #1.Alternate Setup
+// Apply CORS middleware to all routes and handle preflight requests
+app.use(
+	cors({
+		origin: ['http://localhost:3000', 'https://localhost:5000'],
+		credentials: true, // sets "Access-Control-Allow-Credentials", "true"
+	})
+);
+// // > #2. Alternate setup
+// // Preflight Request Configuration
+// app.options('*', cors({ origin: 'http://localhost:3000', credentials: true, optionsSuccessStatus: 200 }));
+// // CORS Middleware for All Routes
+// app.use(cors({ origin: 'http://localhost:3000', credentials: true, optionsSuccessStatus: 200 }));
+
+//BODY PARSER MIDDLEWARE - allow accessing req.body
+// parse application/json
+app.use(express.json());
+// parse application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false }));
 
 // > ENDPOINTS
 // ROOT PAGE
