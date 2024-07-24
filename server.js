@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 
 const connectDB = require('./config/db');
@@ -11,6 +12,9 @@ connectDB();
 
 // > INSTANTIATE EXPRESS APP
 const app = express();
+
+// SET STATIC 'PUBLIC' FOLDER
+app.use(express.static(path.join(__dirname, 'public')));
 
 //BODY PARSER MIDDLEWARE - allo accessing req.body
 app.use(express.json());
