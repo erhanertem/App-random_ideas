@@ -1,8 +1,13 @@
 const express = require('express');
 
+const connectDB = require('./config/db');
 const ideasRouter = require('./routes/ideas');
 
-const PORT = 5000;
+// DOTENV SETUP & PORT FORWARDING
+require('dotenv').config();
+const PORT = process.env.PORT || 5000;
+// ACQUIRE MONGODB CONNECTION
+connectDB();
 
 // > INSTANTIATE EXPRESS APP
 const app = express();
