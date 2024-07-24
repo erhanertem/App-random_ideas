@@ -1,5 +1,3 @@
-// import axios from 'axios';
-
 import Modal from './components/Modal';
 import IdeaForm from './components/IdeaForm';
 import IdeaList from './components/IdeaList';
