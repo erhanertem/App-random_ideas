@@ -52,6 +52,17 @@ router.put('/:id', (req, res) => {
 
 	res.json({ success: true, data: idea });
 });
-// DELETE IDEA
 
+// DELETE IDEA
+router.delete('/:id', (req, res) => {
+	const ideaIndex = ideas.findIndex((idea) => idea.id === Number(req.params.id));
+	// GUARD CLAUSE
+	if (ideaIndex === -1) {
+		return res.status(404).json({ success: false, error: 'Resource not found' });
+	}
+
+	// DELETE IDEA FROM ARRAY
+	ideas.splice(ideaIndex, 1);
+	res.json({ success: true, message: 'Idea deleted successfully' });
+});
 module.exports = router;
