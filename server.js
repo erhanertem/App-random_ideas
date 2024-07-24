@@ -22,12 +22,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // CORS MIDDLEWARE - allow communication/resource sharing between these ports/services
-app.use(
-	cors({
-		origin: ['http://localhost:5000', 'http://localhost:3000'],
-		credentials: true,
-	})
-);
+const corsOptions = {
+	origin: ['http://localhost:3000', 'http://localhost:5000'],
+	methods: ['GET', 'POST', 'PUT', 'DELETE'],
+	allowedHeaders: ['Content-Type', 'Authorization'],
+	credentials: true, // sets "Access-Control-Allow-Credentials", "true"
+	optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 // > ENDPOINTS
 // ROOT PAGE
