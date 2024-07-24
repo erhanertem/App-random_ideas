@@ -1,10 +1,26 @@
+import IdeasAPI from '../services/ideasAPI';
+
 class IdeaList {
 	constructor() {
 		this._ideaListEl = document.querySelector('#idea-list');
 		this._ideas = [];
 
+		this.getIdeas(); //IdeaList's own getIdeas Implementation called when Idealist initialized
+
 		this._tags = ['technology', 'software', 'business', 'education', 'health', 'inventions'];
 		this._validTags = new Set(this._tags);
+	}
+
+	async getIdeas() {
+		try {
+			const response = await IdeasAPI.getAllIdeas();
+			this._ideas = response.data.data;
+			// Trigger render after getting data from API
+			// NOTE: We were not able to render @ index.js as data was not ready then
+			this.render();
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	_getTagClass(tag) {
