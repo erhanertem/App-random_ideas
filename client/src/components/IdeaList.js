@@ -1,36 +1,7 @@
 class IdeaList {
 	constructor() {
 		this._ideaListEl = document.querySelector('#idea-list');
-		this._ideas = [
-			{
-				id: 1,
-				text: 'First idea',
-				tag: 'Technology',
-				username: 'John Doe',
-				date: '2021-01-01',
-			},
-			{
-				id: 2,
-				text: 'Second idea',
-				tag: 'Business',
-				username: 'Jane Smith',
-				date: '2021-02-01',
-			},
-			{
-				id: 3,
-				text: 'Third idea',
-				tag: 'Health',
-				username: 'Jane Doe',
-				date: '2021-03-01',
-			},
-			{
-				id: 4,
-				text: 'Fourth idea',
-				tag: 'Education',
-				username: 'John Doe',
-				date: '2021-04-01',
-			},
-		];
+		this._ideas = [];
 
 		this._tags = ['technology', 'software', 'business', 'education', 'health', 'inventions'];
 		this._validTags = new Set(this._tags);
@@ -51,7 +22,7 @@ class IdeaList {
 	render() {
 		this._ideas.forEach((el) => {
 			const tagClass = this._getTagClass(el.tag);
-			const innerHTML = /*html*/ `
+			const innerHTML = `
          <div class="card">
             <button class="delete"><i class="fas fa-times"></i></button>
             <h3>${el.text}</h3>

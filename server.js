@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
 
 const connectDB = require('./config/db');
 const ideasRouter = require('./routes/ideas');
@@ -16,9 +17,17 @@ const app = express();
 // SET STATIC 'PUBLIC' FOLDER
 app.use(express.static(path.join(__dirname, 'public')));
 
-//BODY PARSER MIDDLEWARE - allo accessing req.body
+//BODY PARSER MIDDLEWARE - allow accessing req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// CORS MIDDLEWARE - allow communication/resource sharing between these ports/services
+app.use(
+	cors({
+		origin: ['http://localhost:5000', 'http://localhost:3000'],
+		credentials: true,
+	})
+);
 
 // > ENDPOINTS
 // ROOT PAGE
