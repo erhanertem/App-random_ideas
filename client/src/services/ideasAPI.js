@@ -1,9 +1,13 @@
-import Axios from 'axios';
+import axios from 'axios';
 
-class ideasAPI {
+class IdeasAPI {
 	constructor() {
 		this._apiURL = 'http://localhost:5000/api/ideas';
 	}
 
-	getIdeas;
+	getAllIdeas() {
+		return axios.get(this._apiURL);
+	}
 }
+
+export default new IdeasAPI();
