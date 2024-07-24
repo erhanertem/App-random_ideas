@@ -7,6 +7,10 @@ const PORT = 5000;
 // > INSTANTIATE EXPRESS APP
 const app = express();
 
+//BODY PARSER MIDDLEWARE - allo accessing req.body
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // > ENDPOINTS
 // ROOT PAGE
 app.get('/', (req, res) => {

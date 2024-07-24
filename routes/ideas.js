@@ -2,8 +2,8 @@ const express = require('express');
 
 // TEMP DATA
 const ideas = [
-	{ id: 1, idea: 'hello world', tag: 'software', username: 'Brunnel', date: '2022-01-01' },
-	{ id: 2, idea: 'saassaahello world', tag: 'toftware', username: 'Zrunnel', date: '2024-01-01' },
+	{ id: 1, text: 'hello world', tag: 'software', username: 'Brunnel', date: '2022-01-01' },
+	{ id: 2, text: 'saassaahello world', tag: 'toftware', username: 'Zrunnel', date: '2024-01-01' },
 ];
 
 // CREATE EXPRESS ROUTER FOR IDEAS
@@ -22,6 +22,21 @@ router.get('/:id', (req, res) => {
 	}
 
 	res.json({ success: true, data: idea });
+});
+
+// CREATE A NEW IDEA
+router.post('/', (req, res) => {
+	const idea = {
+		id: ideas.length + 1,
+		text: req.body.text,
+		tag: req.body.tag,
+		username: req.body.username,
+		date: new Date().toISOString().split('T')[0],
+	};
+
+	ideas.push(idea);
+
+	res.send(req.body.text);
 });
 
 module.exports = router;
