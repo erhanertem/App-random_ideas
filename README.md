@@ -8,10 +8,7 @@
 
 &emsp;
 
-#### Link to Project &rarr; [RandomIdeas](https://app-random-ideas.onrender.com/)
-
-#### Project Preview
-
+#### [RandomIdeas App](https://app-random-ideas.onrender.com/)
 <img src="./screenshot.webp" width="500px"/>
 
 ---
