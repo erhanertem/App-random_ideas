@@ -5,12 +5,23 @@ class IdeaForm {
 	constructor() {
 		this._formModal = document.querySelector('#form-modal');
 		this._ideaList = new IdeaList();
+
+		// IdeasAPI.deleteAllIdeas();
 	}
 
 	async _handleSubmit(event) {
 		event.preventDefault();
 
-		// GATHER THE OBJECT FOR SUBMISSION
+		// Entry Validation
+		if (!this._form.elements.text.value || !this._form.elements.tag.value || !this._form.elements.username.value) {
+			alert('Please fill in all required fields');
+			return; // STOP FUNCTION EXECUTION IF ANY FIELDS ARE EMPTY
+		}
+
+		// Save user to local storage
+		localStorage.setItem('username', this._form.elements.username.value);
+
+		// ASSEMBLE THE OBJECT FOR SUBMISSION
 		const idea = {
 			// NOTE: .text property is accessible because input fields bear name property name="text" etc.
 			text: this._form.elements.text.value,
@@ -40,7 +51,9 @@ class IdeaForm {
          <form id="idea-form">
             <div class="form-control">
                <label for="idea-text">Enter a Username</label>
-               <input type="text" name="username" id="username" />
+               <input type="text" name="username" id="username" value="${
+						localStorage.getItem('username') ? localStorage.getItem('username') : ''
+					}"/>
             </div>
             <div class="form-control">
                <label for="idea-text">What's Your Idea?</label>
