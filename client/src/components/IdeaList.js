@@ -5,7 +5,7 @@ class IdeaList {
 		this._ideaListEl = document.querySelector('#idea-list');
 		this._ideas = [];
 
-		this.getIdeas(); //IdeaList's own getIdeas Implementation called when Idealist initialized
+		this.getIdeas(); //IdeaList's own getIdeas Implementation called when Idealist initialized to fill in _ideas array
 
 		this._tags = ['technology', 'software', 'business', 'education', 'health', 'inventions'];
 		this._validTags = new Set(this._tags);
@@ -23,6 +23,13 @@ class IdeaList {
 		}
 	}
 
+	addIdeaToList(data) {
+		// Add new idea to the list
+		this._ideas.push(data);
+		// Re-render the component
+		this.render();
+	}
+
 	_getTagClass(tag) {
 		let tagClass = '';
 
@@ -32,6 +39,7 @@ class IdeaList {
 		if (this._validTags.has(tag)) {
 			tagClass = `tag-${tag}`;
 		}
+
 		return tagClass;
 	}
 

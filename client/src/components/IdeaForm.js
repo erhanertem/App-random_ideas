@@ -1,10 +1,15 @@
+import IdeasAPI from '../services/ideasAPI';
+import IdeaList from './IdeaList';
+
 class IdeaForm {
 	constructor() {
 		this._formModal = document.querySelector('#form-modal');
+		this._ideaList = new IdeaList();
 	}
 
-	_handleSubmit(event) {
+	async _handleSubmit(event) {
 		event.preventDefault();
+
 		// GATHER THE OBJECT FOR SUBMISSION
 		const idea = {
 			// NOTE: .text property is accessible because input fields bear name property name="text" etc.
@@ -12,7 +17,13 @@ class IdeaForm {
 			tag: this._form.elements.tag.value,
 			username: this._form.elements.username.value,
 		};
-		console.log(idea);
+
+		// CREATED A POST REQ TO BACKEND API TO ADD THE NEW IDEA TO SERVER
+		const newIdea = await IdeasAPI.createIdea(idea);
+
+		// FORCE IDEALIST TO RE-RENDER NEW ARRAY OF IDEAS
+		this._ideaList.addIdeaToList(newIdea.data.data);
+
 		// CLEAR FIELDS
 		this._form.reset();
 		// TRIGGER EVENT INTENTIONALLY TO FORCE CLOSE MODAL UPON SUBMISSION
