@@ -50,16 +50,23 @@ router.post('/', async (req, res) => {
 // UPDATE AN IDEA
 router.put('/:id', async (req, res) => {
 	try {
-		const updatedIdea = await Idea.findByIdAndUpdate(
-			req.params.id,
-			{ $set: { text: req.body.text, tag: req.body.tag } },
-			{ new: true }
-		);
-		// GUARD CLAUSE
-		if (!updatedIdea) {
-			return res.status(404).json({ success: false, error: 'Resource not found' });
+		const idea = await Idea.findById(req.params.id);
+
+		// EXTRA PRECAUTION ENVELOPING THE DELETE LOGIC BY ASKING FOR USERNAME CONFIRMATION INPUT, IF THE USERNAME  OF THE DELETE-ID IS MATCHED BY THE USER INPUT, PROCEEDS W/ DELETE OPERATION ELSE ...
+		if (idea.username.toLowerCase() === req.body.username.toLowerCase()) {
+			const updatedIdea = await Idea.findByIdAndUpdate(
+				req.params.id,
+				{ $set: { text: req.body.text, tag: req.body.tag } },
+				{ new: true }
+			);
+
+			return res.json({ success: true, data: updatedIdea });
 		}
-		res.json({ success: true, data: updatedIdea });
+		// User fails to approve by typing this username
+		res.status(403).json({
+			success: false,
+			error: 'Updating the resource is not authorized. Provide matching credential.',
+		});
 	} catch (error) {
 		console.error(error.message);
 		res.status(500).json({ success: false, error: 'Server Error' });
@@ -69,13 +76,19 @@ router.put('/:id', async (req, res) => {
 // DELETE IDEA
 router.delete('/:id', async (req, res) => {
 	try {
-		// await Idea.findOneAndDelete({ _id: req.params.id }); //Below method is d shorthand method
-		const deletedIdea = await Idea.findByIdAndDelete(req.params.id);
-		// GUARD CLAUSE
-		if (!deletedIdea) {
-			return res.status(404).json({ success: false, error: 'Resource not found' });
+		const idea = await Idea.findById(req.params.id);
+
+		// EXTRA PRECAUTION ENVELOPING THE DELETE LOGIC BY ASKING FOR USERNAME CONFIRMATION INPUT, IF THE USERNAME  OF THE DELETE-ID IS MATCHED BY THE USER INPUT, PROCEEDS W/ DELETE OPERATION ELSE ...
+		if (idea.username.toLowerCase() === req.body.username.toLowerCase()) {
+			// await Idea.findOneAndDelete({ _id: req.params.id }); //Below method is d shorthand method
+			await Idea.findByIdAndDelete(req.params.id);
+			return res.json({ success: true, data: {} });
 		}
-		res.json({ success: true, data: {} });
+		// User fails to approve by typing this username
+		res.status(403).json({
+			success: false,
+			error: 'Deleting the resource was not authorized. Provide matching credential.',
+		});
 	} catch (error) {
 		console.error(error.message);
 		res.status(500).json({ success: false, error: 'Server Error' });
