@@ -44,10 +44,10 @@ class IdeaList {
 	}
 
 	render() {
-		this._ideas.forEach((el) => {
-			const tagClass = this._getTagClass(el.tag);
-			const innerHTML = `
-         <div class="card">
+		this._ideaListEl.innerHTML = this._ideas
+			.map((el) => {
+				const tagClass = this._getTagClass(el.tag);
+				return `<div class="card">
             <button class="delete"><i class="fas fa-times"></i></button>
             <h3>${el.text}</h3>
             <p class="tag ${tagClass}">${el.tag}</p>
@@ -55,10 +55,9 @@ class IdeaList {
             Posted on <span class="date">${el.date}</span> by
             <span class="author">${el.username}</span>
             </p>
-         </div>
-         `;
-			this._ideaListEl.innerHTML += innerHTML;
-		});
+         </div>`;
+			})
+			.join('');
 	}
 }
 
