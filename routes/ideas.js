@@ -81,4 +81,16 @@ router.delete('/:id', async (req, res) => {
 		res.status(500).json({ success: false, error: 'Server Error' });
 	}
 });
+
+// DELETE ALL IDEAS
+router.delete('/', async (req, res) => {
+	try {
+		const deleteAction = await Idea.deleteMany();
+		console.log(deleteAction);
+		res.json({ success: true });
+	} catch (error) {
+		console.error(error.message);
+		res.status(500).json({ success: false, error: 'Server Error' });
+	}
+});
 module.exports = router;
