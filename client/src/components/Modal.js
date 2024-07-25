@@ -18,9 +18,13 @@ class Modal {
 	closeModal() {
 		this._modal.style.display = 'none';
 	}
+	resetForm() {
+		document.getElementById('idea-form').reset();
+	}
 	outsideClick(event) {
 		// console.log(event.target);
 		if (event.target === this._modal) {
+			this.resetForm();
 			this.closeModal();
 		}
 	}
