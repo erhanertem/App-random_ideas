@@ -18,7 +18,19 @@ class IdeasAPI {
 		return axios.put(`${this._apiURL}/${id}`, data);
 	}
 	async deleteIdea(id) {
-		return axios.delete(`${this._apiURL}/${id}`);
+		const username = localStorage.getItem('username') ? localStorage.getItem('username') : '';
+
+		// > #1 SENDING DATA VIA HEADERS
+		// const headers = {
+		// 	Username: username,
+		// };
+		// return axios.delete(`${this._apiURL}/${id}`, { headers })
+		// > #2 SENDING DATA VIA RE.BODY - BY DEFAULT AXIOS DOES THIS UNLESS STATED OTHERWISE
+		return axios.delete(`${this._apiURL}/${id}`, {
+			data: {
+				username: username,
+			},
+		});
 	}
 	async deleteAllIdeas() {
 		return axios.delete(`${this._apiURL}`);
