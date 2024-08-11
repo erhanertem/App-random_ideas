@@ -8,7 +8,7 @@
 
 &emsp;
 
-###### ⚠️Free-tier MongoDB services may get suspended leading to app dysfunction
+###### ⚠️Free-tier MongoDB services may get suspended leading to app dysfunction <br/> ⚠️Free-tier render services may experience throttling, leading to delayed app loading times.
 
 #### [RandomIdeas App](https://app-random-ideas.onrender.com/)
 
